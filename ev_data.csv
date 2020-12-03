@@ -1,0 +1,38 @@
+id,brand,type,brand_id,model,release_year,variant,usable_battery_size,ac_charger/usable_phases,ac_charger/ports/0,ac_charger/max_power,ac_charger/power_per_charging_point/11,ac_charger/power_per_charging_point/16,ac_charger/power_per_charging_point/22,ac_charger/power_per_charging_point/43,ac_charger/power_per_charging_point/2.0,ac_charger/power_per_charging_point/2.3,ac_charger/power_per_charging_point/3.7,ac_charger/power_per_charging_point/7.4,dc_charger/ports/0,dc_charger/max_power,dc_charger/charging_curve/0/percentage,dc_charger/charging_curve/0/power,dc_charger/charging_curve/1/percentage,dc_charger/charging_curve/1/power,dc_charger/charging_curve/2/percentage,dc_charger/charging_curve/2/power,dc_charger/is_default_charging_curve,energy_consumption/average_consumption
+1,Audi,bev,89c2668c-0c50-4344-9386-93e4000f7673,e-tron 55,2019,22kW-AC,86.5,3,type2,22,11.1,16.2,22,22,2,2.3,3.7,7.4,ccs,155,0,137,70,155,72,150,false,23.4
+2,Audi,bev,89c2668c-0c50-4344-9386-93e4000f7673,e-tron 50,2019,22kW-AC,65,3,type2,22,11.1,16.2,22,22,2,2.3,3.7,7.4,ccs,125,0,118,75,125,100,22,true,22.7
+3,Audi,phev,89c2668c-0c50-4344-9386-93e4000f7673,A3 Sportback 40 e-tron,2020,,8.8,1,type2,3.7,3.7,3.7,3.7,3.7,2,2.3,3.7,3.7,,,,,,,,,,12.4
+4,BMW,phev,0742668c-bf59-4191-890e-2b0883508808,X5,2020,PHEV,21,1,type2,3.7,3.7,3.7,3.7,3.7,2,2.3,3.7,3.7,,,,,,,,,,21.3
+5,Fiat,bev,3291e5ba-862c-49fa-8437-71105743875e,500e,2020,,42,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,85,0,80,75,85,100,11,true,16.8
+6,Ford,bev,6cf9e9b6-28aa-44c7-b6c3-438d518ac12f,Focus electric,2017,,33.5,1,type2,6.6,3.7,5.4,6.6,6.6,2,2.3,3.7,6.6,ccs,50,0,47,75,50,100,6.6,true,16.4
+7,Hyundai,bev,9771afb8-9e25-4ae6-a5b3-b2a5b9f363f0,Ioniq,2019,,38.3,1,type2,7.2,3.7,5.4,7.2,7.2,2,2.3,3.7,7.2,ccs,47,0,44,75,47,100,7.2,true,15.3
+8,Hyundai,bev,9771afb8-9e25-4ae6-a5b3-b2a5b9f363f0,Kona,2020,64 kWh,64,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,77,0,70,40,77,42,70,false,15.8
+9,Kia,bev,3337d5f0-39de-4ded-831b-843dfec1ebbd,Soul,2019,30 kWh,30,1,type2,6.6,3.7,5.4,6.6,6.6,2,2.3,3.7,6.6,chademo,50,0,47,75,50,100,6.6,true,17.6
+10,Kia,bev,3337d5f0-39de-4ded-831b-843dfec1ebbd,e-Niro,2020,64 kWh,64,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,77,0,70,40,77,42,70,false,17.3
+11,Kia,bev,3337d5f0-39de-4ded-831b-843dfec1ebbd,e-Soul,2020,64 kWh 11 kW-AC,64,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,77,0,73,75,77,100,11,true,17.5
+12,Mercedes Benz,bev,b2282fbe-f5d9-48d9-943f-a9b66ec51423,EQC,2019,,80,2,type2,7.4,7.4,7.4,7.4,7.4,2,2.3,3.7,7.4,ccs,125,0,105,39,125,70,87,false,21.6
+13,Mitsubishi,phev,3cf8cf51-60ac-4cac-9f25-131c21eda12e,Outlander PHEV,2018,,11,1,type1,3.7,3.7,3.7,3.7,3.7,2,2.3,3.7,3.7,chademo,22,0,20,75,22,100,3.7,true,15.2
+14,Nissan,bev,dab5a47a-e8ce-4d34-9139-0701499205b1,e-NV 200,2020,24 kWh,24,1,type1,3.6,3.6,3.6,3.6,3.6,2,2.3,3.6,3.6,chademo,46,0,43,75,46,100,3.6,true,20
+15,Nissan,bev,dab5a47a-e8ce-4d34-9139-0701499205b1,Leaf,2019,e+ 62 kWh,62,1,type2,6.6,3.7,5.4,6.6,6.6,2,2.3,3.7,6.6,chademo,100,0,95,75,100,100,6.6,true,17.2
+16,Renault,bev,c0d8a60c-34b8-44fe-8af7-9eeb62eedb4b,Zoe,2019,R110 ZE 40,41,3,type2,22,11.1,16.2,22,22,2,2.3,3.7,7.4,ccs,45,0,42,75,45,100,22,true,16.1
+17,Tesla,bev,f37896c3-6bc5-45e1-b442-b9cbc38e3a7c,Model 3,2019,SR+,50,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,149,0,130,52,149,60,110,false,15.3
+18,Tesla,bev,f37896c3-6bc5-45e1-b442-b9cbc38e3a7c,Model S,2020,85,76,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,140,0,125,43,140,80,37,false,19.1
+19,Tesla,bev,f37896c3-6bc5-45e1-b442-b9cbc38e3a7c,Model X,2019,Standard Range,75,3,type2,16.5,11.1,16.2,16.5,16.5,2,2.3,3.7,7.4,ccs,140,0,125,43,140,80,37,false,20
+20,Volkswagen,bev,481793f5-c8b0-4dc9-b3d4-cc615085ac07,e-up,2020,CCS,32.3,2,type2,7.2,7.2,7.2,7.2,7.2,2,2.3,3.7,7.2,ccs,34,0,32,27,34,80,14,false,16.6
+21,Volkswagen,bev,481793f5-c8b0-4dc9-b3d4-cc615085ac07,ID.3,2020,Standard Range,45,2,type2,7.2,7.2,7.2,7.2,7.2,2,2.3,3.7,7.2,ccs,50,0,47,75,50,100,7.2,true,16.4
+22,Volkswagen,phev,481793f5-c8b0-4dc9-b3d4-cc615085ac07,Passat GTE,2019,,13.1,1,type2,3.7,3.7,3.7,3.7,3.7,2,2.3,3.7,3.7,,,,,,,,,,16.2
+23,Porsche,bev,68e11a25-d316-4d22-9444-45c7306c8ab7,Taycan,2020,Turbo S,83.7,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,270,0,256,75,270,100,11,true,22.3
+24,Porsche,bev,68e11a25-d316-4d22-9444-45c7306c8ab7,Taycan,2020,4S,71,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,225,0,213,75,225,100,11,true,19.5
+25,Porsche,bev,68e11a25-d316-4d22-9444-45c7306c8ab7,Taycan,2020,4S Plus,83.7,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,270,0,256,75,270,100,11,true,19.7
+26,Porsche,bev,68e11a25-d316-4d22-9444-45c7306c8ab7,Taycan,2020,Turbo ,83.7,3,type2,11,11,11,11,11,2,2.3,3.7,7.4,ccs,270,0,256,75,270,100,11,true,21.5
+27,MG,bev,5663b87a-d940-4bab-9846-d74c8c0ae260,ZS EV,2020,,44.5,1,type2,6.6,3.7,5.4,6.6,6.6,2,2.3,3.7,6.6,ccs,55,0,52,75,55,100,6.6,true,19.8
+28,Maxus,bev,171a1e6d-8cbc-41a9-a8bb-e05b7ee98889,EV80,2018,,56,2,type2,6.6,6.6,6.6,6.6,6.6,2,2.3,3.7,6.6,ccs,28,0,26,75,28,100,6.6,true,35
+29,Volvo,phev,2e55ea02-c829-4256-94fd-ffc971a1dd8e,XC 60 T8,2018,,10.4,1,type2,3.7,3.7,3.7,3.7,3.7,2,2.3,3.7,3.7,,,,,,,,,,24.5
+30,Ford,phev,6cf9e9b6-28aa-44c7-b6c3-438d518ac12f,Kuga,2020,PHEV,14.4,1,type2,3.7,3.7,3.7,3.7,3.7,2,2.3,3.7,3.7,,,,,,,,,,19
+31,Mazda,bev,9b829849-1219-48b8-964e-90ddc1a4fa85,MX-30,2020,,32,1,type2,6.6,3.7,5.4,6.6,6.6,2,2.3,3.7,6.6,ccs,50,0,47,75,50,100,6.6,true,17.8
+32,Mercedes Benz,phev,b2282fbe-f5d9-48d9-943f-a9b66ec51423,A 250 e,2020,"7,4 kW-AC",10.7,2,type2,7.4,7.4,7.4,7.4,7.4,2,2.3,3.7,7.4,,,,,,,,,,15
+33,Kia,phev,3337d5f0-39de-4ded-831b-843dfec1ebbd,Ceed SW,2020,PHEV,8.9,1,type2,3.3,3.3,3.3,3.3,3.3,2,2.3,3.3,3.3,,,,,,,,,,11.3
+34,Kia,phev,3337d5f0-39de-4ded-831b-843dfec1ebbd,XCeed,2020,PHEV,8.9,1,type2,3.3,3.3,3.3,3.3,3.3,2,2.3,3.3,3.3,,,,,,,,,,11.3
+35,Kia,phev,3337d5f0-39de-4ded-831b-843dfec1ebbd,Niro,2020,PHEV,8.9,1,type2,3.3,3.3,3.3,3.3,3.3,2,2.3,3.3,3.3,,,,,,,,,,9.8
+36,Mercedes Benz,phev,b2282fbe-f5d9-48d9-943f-a9b66ec51423,GLC 300 de 4MATIC,2020,PHEV,13.5,1,type2,7.4,3.7,5.4,7.4,7.4,2,2.3,3.7,7.4,,,,,,,,,,18.2
+37,Mercedes Benz,phev,b2282fbe-f5d9-48d9-943f-a9b66ec51423,GLE,2020,350 de/e,31.2,1,type2,7.4,3.7,5.4,7.4,7.4,2,2.3,3.7,7.4,ccs,60,0,57,75,60,100,7.4,true,31.2
