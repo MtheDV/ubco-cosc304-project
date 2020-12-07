@@ -16,16 +16,13 @@
 <%@ include file="header.jsp" %>
 
 <%
-
-	String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
-	String uid = "SA";
-	String pw = "YourStrong@Passw0rd";
-
 	//Get order id
-	String orderid = request.getParameter("id");
-	int id = Integer.parseInt(orderid);    
+	 	String orderid = (String)session.getAttribute("orderId").toString();
+		int id = Integer.parseInt(orderid);
+		//id = session.getAttribute("orderId").toString();
 	
-	try ( Connection con = DriverManager.getConnection(url, uid, pw);) {
+	try {
+		getConnection();
 		String sql = "SELECT orderId FROM ordersummary WHERE orderId =?";
 		PreparedStatement stmt=con.prepareStatement(sql);
 		//Start a transaction (turn-off auto-commit)
@@ -70,16 +67,21 @@
 				out.println("<h2>Shipment has been successfully processed</h2>");
 				//Auto-commit should be turned back on
 				con.setAutoCommit(true);
+				closeConnection();
+				response.sendRedirect("order.jsp");
 			}
 			//Create a new shipment record
 		}else{
 			out.println("<h1 align='center'>Invalid Order ID</h1>");
 		}
+		closeConnection();
 		
 	} catch(SQLException ex){ 
 		out.println(ex); 
 		//con.rollback();
 	}
+
+	
 	
 %>			
 

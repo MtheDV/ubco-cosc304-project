@@ -49,10 +49,16 @@ if (userName == null){
 		stmt.setString(1, userName);
 		ResultSet rst = stmt.executeQuery();
 
-		out.println("<table class='table'><thead class='thead-dark'><tr><th>Customer Profile</th><th></th></thead>");
+
 
 		// Print out the ResultSet
 		while (rst.next()) {
+
+			out.println("<form method='post' action='createUser.jsp?id="+rst.getInt(1)+"'>");
+
+			out.println("<table class='table'><thead class='thead-dark'><tr><th>Customer Profile</th><th></th></thead>");
+
+
 			//ID
 			out.println("<tr><td>Id</td><td>" + rst.getInt(1)+ "</td></tr>");
 			//names
@@ -85,6 +91,12 @@ if (userName == null){
 	}
 	
 %>
+
+
+<div class='mt-3 align-centre'><button type='submit' class='btn btn-light mt-3'>Edit details</button></div>
+
+</form>
+
 </div>
 
 </body>

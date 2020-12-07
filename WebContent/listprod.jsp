@@ -12,13 +12,13 @@
 <%@include file="header.jsp" %>
 <%@include file="jdbc.jsp" %>
 
-<div class="container text-center mt-5">
+<div class="text-center mt-5">
 	<h1>Search for the products you want to buy:</h1>
 
     <div class="row justify-content-center"> 
-        <div class="col-9 m-3">
+        <div class="col-7 m-3">
 			<form class="form-inline my-2 my-lg-0" method="get" action="listprod.jsp">
-				<input class="form-control mr-2" type="text" name="productName" size="50">
+				<input class="form-control mr-2" type="text" name="productBrand" size="50">
 				<input class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit" value="Submit">
 				<input class="btn btn-outline-success my-2 my-sm-0 mr-2" type="reset" value="Reset"> (Leave blank for all products)
 			</form>
@@ -27,8 +27,8 @@
 
 	<div class="text-left">
 	<%
-		// Get product name to search for
-		String name = request.getParameter("productName");
+		// Get product brand to search for
+		String name = request.getParameter("productBrand");
 		if (name == null)
 			name = "";
 
@@ -36,7 +36,7 @@
 		//Filter by category
 
 		//ONLY ALLOWS FOR 20 DIFFERENT CATEGORIES
-		/*String[] categories = new String[20];
+		String[] categories = new String[20];
 
 		try ( Connection con2 = DriverManager.getConnection(url, uid, pw);) {
 
@@ -44,7 +44,7 @@
 			ResultSet rst2 = null;
 
 			//finds all distict categories in database
-			String sql2 = "SELECT DISTINCT(categoryName) FROM product P LEFT JOIN category C ON P.categoryId=C.categoryId";
+			String sql2 = "SELECT DISTINCT(productBrand) FROM product";
 
 			stmt2 = con2.prepareStatement(sql2);
 			rst2 = stmt2.executeQuery();
@@ -52,7 +52,7 @@
 			int count = 0;
 			// Print out the ResultSet
 			while (rst2.next()) {
-				// For each category save into strign array
+				// For each category save into string array
 				String cat = rst2.getString(1);
 				categories[count] = cat;
 				count++;
@@ -61,41 +61,44 @@
 			con2.close();
 
 
-		} catch (SQLException ex) { out.println(ex); }*/
+		} catch (SQLException ex) { out.println(ex); }
+
+		
 
 		////////////////////////////////////////////
-		getConnection();
-		try {
+		// Start the table
+		//out.println("<table class='table table-striped'><thead class='thead-dark'><tr><th colspan=1>Product Name</th><th colspan=1>Product Year</th><th colspan=2>Price</th></tr></thead>"); 
+		out.println("<div class='d-flex flex-wrap align-items-stretch justify-content-center p-2'>");
 
+		
+		try {
+			getConnection();
 			PreparedStatement stmt=null;
 			ResultSet rst = null;
 			NumberFormat currFormat = NumberFormat.getCurrencyInstance(new Locale("en","US"));
 
-			//String sql = "SELECT categoryName, productName, productPrice, productId FROM product P LEFT JOIN category C ON P.categoryId=C.categoryId" 
-			//+" WHERE productName LIKE ? ORDER BY categoryName";
-			String sql = "SELECT productBrand, productModel, productPrice, productId FROM product WHERE productModel LIKE ? OR productBrand LIKE ? ORDER BY productModel";
+			String sql = "SELECT productBrand, productModel, productReleaseYear, productPrice, productId, productImageUrl FROM product WHERE productBrand LIKE ? OR productModel LIKE ? OR productReleaseYear LIKE ? ORDER BY productBrand, productReleaseYear DESC;";
+
 			String prodName = "%"+name+"%";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, prodName);
 			stmt.setString(2, prodName);
+			stmt.setString(3, prodName);
 			rst = stmt.executeQuery();
 
-			// Start the table
-			out.println("<table class='table table-striped'><thead class='thead-dark'><tr><th colspan=1>Product Name</th><th colspan=3>Price</th></tr></thead>"); 
+			int last = 21;
+
 			// Print out the ResultSet
+
 			while (rst.next()) {
 				// For each product create a link of the form
 				// addcart.jsp?id=productId&name=productName&price=productPrice
-				out.println("<tr><td colspan=2><a href=product.jsp?id="+rst.getInt(4)+">"+rst.getString(1)+" "+rst.getString(2)+"</a></td><td>"+currFormat.format(rst.getDouble(3))+
-							"</td><td><a href=addcart.jsp?id="+rst.getInt(4)+"&name="+rst.getString(2).replaceAll(" ", "+")+"&price="+rst.getDouble(3)+
-							">Add to Cart</a></td></tr>");
 
 				//if nothing came back from categories
-				/*if (categories.length == 0){
-					out.println("<tr><td>"+rst.getString(2)+"</td><td>"+currFormat.format(rst.getDouble(3))+
-					"</td><td><a href=addcart.jsp?id="+rst.getInt(4)+"&name="+rst.getString(2).replaceAll(" ", "+")+"&price="+rst.getDouble(3)+
-					">Add to Cart</a></td></tr>");
-
+				if (categories.length == 0){
+					out.println("<div class='bg-light p-3 m-3 rounded'><a href=product.jsp?id="+rst.getInt(5)+"><img height=200 style='clip-path:margin-box' class='rounded' src="+rst.getString(6)+"><h3>"+rst.getString(1)+" "+rst.getString(2)+"</h3></a><h4>"+rst.getInt(3)+
+								"</h4><h4>"+currFormat.format(rst.getDouble(4))+"</h4><br><a class='btn btn-primary' href=addcart.jsp?id="+rst.getInt(5)+"&brand="+rst.getString(1)+"&model="+rst.getString(2).replaceAll(" ","+")+
+								"&price="+rst.getDouble(4)+"&qty=1>Add To Cart</a></div>");
 				} else {
 					
 					for (int i = 0; i < categories.length; i++){
@@ -104,21 +107,20 @@
 							//If category has already had header printed then just print values
 							if (i == last){
 
-								out.println("<tr><td colspan=2><a href=product.jsp?id="+rst.getInt(4)+">"+rst.getString(2)+"</a></td><td>"+currFormat.format(rst.getDouble(3))+
-									"</td><td><a href=addcart.jsp?id="+rst.getInt(4)+"&name="+rst.getString(2).replaceAll(" ", "+")+"&price="+rst.getDouble(3)+
-									">Add to Cart</a></td></tr>");
+								out.println("<div class='bg-light p-3 m-3 rounded'><a href=product.jsp?id="+rst.getInt(5)+"><img height=200 style='clip-path:margin-box' class='rounded' src="+rst.getString(6)+"><h3>"+rst.getString(1)+" "+rst.getString(2)+"</h3></a><h4>"+rst.getInt(3)+
+											"</h4><h4>"+currFormat.format(rst.getDouble(4))+"</h4><br><a class='btn btn-primary' href=addcart.jsp?id="+rst.getInt(5)+"&brand="+rst.getString(1)+"&model="+rst.getString(2).replaceAll(" ","+")+
+											"&price="+rst.getDouble(4)+"&qty=1>Add To Cart</a></div>");
 							//else print header as well as values
 							} else {
-
-							//header	
-							//out.println("<table class='table table-striped'><thead class='thead-light'><tr><th colspan=4>"+rst.getString(1)+"</th></tr></thead>"); 
-							out.println("<thead class='thead-light'><tr><th colspan=4>"+rst.getString(1)+"</th></tr></thead>"); 
-							last = i;
+								last = i;
+								
+								//product values 
+								//<a href=addcart.jsp?id="+rst.getInt(5)+"&brand="+rst.getString(1)+"&model="+rst.getString(2).replaceAll(" ","+")+"&price="+rst.getDouble(4)+">Add To Cart</a>
 							
-							//product values
-							out.println("<tr><td colspan=2><a href=product.jsp?id="+rst.getInt(4)+">"+rst.getString(2)+"</a></td><td>"+currFormat.format(rst.getDouble(3))+
-								"</td><td><a href=addcart.jsp?id="+rst.getInt(4)+"&name="+rst.getString(2).replaceAll(" ", "+")+"&price="+rst.getDouble(3)+
-								">Add to Cart</a></td></tr>");
+
+								out.println("<div class='bg-light p-3 m-3 rounded'><a href=product.jsp?id="+rst.getInt(5)+"><img height=200 style='clip-path:margin-box' class='rounded' src="+rst.getString(6)+"><h3>"+rst.getString(1)+" "+rst.getString(2)+"</h3></a><h4>"+rst.getInt(3)+
+											"</h4><h4>"+currFormat.format(rst.getDouble(4))+"</h4><br><a class='btn btn-primary' href=addcart.jsp?id="+rst.getInt(5)+"&brand="+rst.getString(1)+"&model="+rst.getString(2).replaceAll(" ","+")+
+											"&price="+rst.getDouble(4)+"&qty=1>Add To Cart</a></div>");
 
 							}
 
@@ -128,10 +130,11 @@
 						}
 						
 					}
-				}*/
+				}
 			}
 			// End table
-			out.println("</table>");
+			out.println("</div>");
+			//out.println("</table>");
 			// Close connection
 			closeConnection();
 

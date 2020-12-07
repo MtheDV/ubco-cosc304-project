@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <%@ include file="jdbc.jsp" %>
+<%@ include file="auth.jsp" %>
 
 <html>
     <head>
@@ -10,7 +11,7 @@
     <%@ include file="header.jsp" %>
     
         <div class="container mt-5">
-            <h1>Write a review for:</h1>
+            <h1 class="mb-3">Write a review for:</h1>
             <%
                 String productId = request.getParameter("id");
                 try {
@@ -35,7 +36,7 @@
                 } catch(Exception e) { out.println(e); }
 
                 out.println(
-                    "<div id='reviews' class='tabDetails'>" +
+                    "<div id='reviews' class='tabDetails mt-3'>" +
                         "<form method='post' action='authReview.jsp?id="+productId+"'>" +
                             "<div class='form-group'>" +
                                 "<div class='form-check form-check-inline'>" +
@@ -59,8 +60,8 @@
                                 "<label class='form-check-label' for='rating5'>5 Stars</label>" +
                             "</div>" +
                             "<label for='review'></label>" +
-                            "<textarea class='form-control' name='review' rows=4></textarea>" +
-                            "<button type='submit' class='btn btn-primary'>Submit</button>" +
+                            "<textarea class='form-control mt-3' name='review' rows=4></textarea>" +
+                            "<button type='submit' class='btn btn-primary mt-3 float-right'>Submit</button>" +
                             "</div>" +
                         "</form>" +
                     "</div>"

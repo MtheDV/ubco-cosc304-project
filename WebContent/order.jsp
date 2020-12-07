@@ -14,15 +14,20 @@
 </head>
 <body style="padding-top: 45px">
 <%@include file="header.jsp"%>
+<%@include file="jdbc.jsp" %>
+<%@ include file="auth.jsp" %>
+
 
 <div class="container mt-5">
 <% 
-	// Get customer id
+	/*// Get customer id
 	String custId = request.getParameter("customerId");
 	String password = request.getParameter("password");
-	@SuppressWarnings({"unchecked"})
+	@SuppressWarnings({"unchecked"})*/
 	HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
+	
 
+	String custId = ((String)session.getAttribute("customerId").toString());
 	// Make connection
 	String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 	String uid = "SA";
@@ -36,14 +41,17 @@
 		out.println("ClassNotFoundException: " + e);
 	}
 
-	try (Connection con = DriverManager.getConnection(url, uid, pw);) {
-		
+
+	//try (Connection con = DriverManager.getConnection(url, uid, pw);) {
+		getConnection();
 		int id = -1;
 		boolean isId = false;
+		id = Integer.parseInt(custId);
 		// Determine if valid customer id was entered
+		/*
 		try {
 			// Convert id to integer
-			id = Integer.parseInt(custId);
+			
 			// Check if customer ID exists with correct password
 			PreparedStatement pstmt = con.prepareStatement("SELECT customerId FROM customer WHERE customerId = ? and password = ?", Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, id); pstmt.setString(2, password);
@@ -53,11 +61,12 @@
 		} catch (NumberFormatException e) {
 			out.println("<h4>Invalid customer Id: " + e + "</h4>");
 		}
+		
 		if (!isId)
 			// Display message saying wrong user id or password
 			out.println("<h4 class='text-center'>Customer Id or Password is incorrect. " +
 						"<a href='javascript:history.back()'>Go Back</a></h4>");
-
+		*/
 		// Determine if there are products in the shopping cart
 		boolean isProdList = productList != null;
 		if (!isProdList)
@@ -65,12 +74,26 @@
 			out.println("<h4>Your shopping cart is empty</h4>");
 
 		// Continue if there is an order and a customer
-		if (isId && isProdList) {
+		else {
 			// Save order information to database (date and custId)
-			String sql = "INSERT INTO ordersummary (orderDate, customerId) VALUES (GETDATE(), ?)";
+
+			// String sql = "INSERT INTO ordersummary (orderDate, shiptoAddress, shiptoCity, shiptoState,shiptoPostalCode, shiptoCountry, customerId) " +
+			// "VALUES (GETDATE(), ?, ?, ?, ?, ?, ?)";
+			// PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);	
+			// pstmt.setString(1, (String)session.getAttribute("address"));
+			// pstmt.setString(2, (String)session.getAttribute("city"));
+			// pstmt.setString(3, (String)session.getAttribute("state"));
+			// pstmt.setString(4, (String)session.getAttribute("pc"));
+			// pstmt.setString(5, (String)session.getAttribute("country"));
+			// pstmt.setInt(6,id);
+			// pstmt.executeUpdate();
+
+			String sql = "INSERT INTO ordersummary (orderDate, customerId) " +
+			"VALUES (GETDATE(), ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);	
-			pstmt.setInt(1, id);
+			pstmt.setInt(1,id);
 			pstmt.executeUpdate();
+
 			// Retrieve orderId from ordersummary
 			int orderId = -1;
 			sql = "SELECT TOP 1 orderId FROM ordersummary WHERE customerId = ? ORDER BY orderId DESC";
@@ -88,19 +111,21 @@
 			{ 
 				Map.Entry<String, ArrayList<Object>> entry = iterator.next();
 				ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-				String productId = (String) product.get(0);
-				String price = (String) product.get(2);
+
+				String productId = (String)product.get(0);
+				String price = (String)(product.get(3).toString());
 				double pr = 0;
 				if (price != null)
 					pr = Double.parseDouble(price);
-				int qty = ( (Integer)product.get(3)).intValue();
+				int qty = Integer.parseInt((String)product.get(4).toString());
 				// Insert into orderproduct table
 				sql = "INSERT INTO orderproduct VALUES (?, ?, ?, ?)";
 				pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				pstmt.setInt(1, orderId); pstmt.setString(2, productId); pstmt.setInt(3, qty); pstmt.setDouble(4, pr);
 				pstmt.executeUpdate();
 				// Add to total product price
-				totalPrice += pr;
+
+				totalPrice += qty*pr;
 			}
 
 			// Update total amount for order record
@@ -119,7 +144,8 @@
 
 			out.println("<table class='table table-striped'><thead class='thead-dark'><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th><th>Price</th><th>Subtotal</th></tr></thead>"); 
 				NumberFormat currFormat = NumberFormat.getCurrencyInstance(new Locale("en","US"));
-				sql = "SELECT oP.productId, productName, quantity, productPrice, price FROM orderProduct oP JOIN Product P ON oP.productId=P.productId WHERE orderId =?";
+
+				sql = "SELECT oP.productId, productBrand, productModel, quantity, productPrice FROM orderProduct oP JOIN Product P ON oP.productId=P.productId WHERE orderId =?";
 				pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				pstmt.setInt(1, orderId);
 				rst = pstmt.executeQuery();
@@ -127,7 +153,8 @@
 				while (rst.next()) {
 					// For each product create a link of the form
 					// addcart.jsp?id=productId&name=productName&price=productPrice
-					out.println("<tr><td>"+rst.getInt(1)+"</td><td>"+rst.getString(2)+"</td><td>"+rst.getInt(3)+"</td><td>"+currFormat.format(rst.getDouble(4))+"</td><td>"+currFormat.format(rst.getDouble(5))+"</td></tr>");
+
+					out.println("<tr><td>"+rst.getInt(1)+"</td><td>"+rst.getString(2)+rst.getString(3)+"</td><td>"+rst.getInt(4)+"</td><td>"+currFormat.format(rst.getDouble(5))+"</td><td>"+currFormat.format(rst.getDouble(4)*rst.getDouble(5))+"</td></tr>");
 				}
 				out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
 							+"<td><b>"+currFormat.format(totalPrice)+"</b></td></tr>");
@@ -149,9 +176,10 @@
 
 			session.removeAttribute("productList");
 		}
-	} catch (Exception e) {
+
+	/*} catch (Exception e) {
 		out.println(e);
-	}
+	}*/
 %>
 </div>
 </BODY>

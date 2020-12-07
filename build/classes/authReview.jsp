@@ -18,15 +18,28 @@
         int userId = -1;
         while(rst.next())
             userId = rst.getInt(1);
-        
-        // insert to reviews
-        sql = "INSERT INTO review VALUES (?, GETDATE(), ?, ?, ?)";
+
+        sql = "SELECT reviewId FROM review WHERE customerId = ? ";
         stmt = con.prepareStatement(sql);
-        stmt.setInt(1, rating); stmt.setInt(2, userId); stmt.setInt(3, productId); stmt.setString(4, review);
-        stmt.executeUpdate();
+        stmt.setInt(1, userId);
+        rst = stmt.executeQuery();
+        boolean hasReviewed = false;
+        while (rst.next())
+            hasReviewed = true;
+        
+        if (!hasReviewed) {
+            // insert to reviews
+            sql = "INSERT INTO review VALUES (?, GETDATE(), ?, ?, ?)";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, rating); stmt.setInt(2, userId); stmt.setInt(3, productId); stmt.setString(4, review);
+            stmt.executeUpdate();
+        }
 
         closeConnection();
 
-        response.sendRedirect("product.jsp?id="+productId);
+        String passed = "f";
+        if (!hasReviewed)
+            passed = "t";
+        response.sendRedirect("product.jsp?id="+productId+"&rv="+passed);
     } catch (SQLException exp) { out.println(exp); }
 %>

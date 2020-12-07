@@ -16,6 +16,10 @@
 		<h1 class="mb-3">Order List</h1>
 
 		<%
+		String userName = (String) session.getAttribute("authenticatedUser");
+
+
+
 		String url = "jdbc:sqlserver://db:1433;DatabaseName=tempdb;";
 		String uid = "SA";
 		String pw = "YourStrong@Passw0rd";
@@ -34,15 +38,22 @@
 		// out.println(currFormat.format(5.0);  // Prints $5.00
 
 		// Make connection
-		try(Connection con = DriverManager.getConnection(url,uid,pw);
-		Statement stmt = con.createStatement();){
+
+		try (Connection con = DriverManager.getConnection(url,uid,pw);){
+			//Statement stmt = con.createStatement();){
 			String sql = "SELECT OS.orderId,OS.orderDate,C.customerId,C.firstName,C.lastName, OS.totalAmount" +
-			" FROM ordersummary AS OS JOIN customer AS C ON OS.customerId = C.customerId";
+			" FROM ordersummary AS OS JOIN customer AS C ON OS.customerId = C.customerId WHERE C.userid = ?";
+
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, userName);
+			ResultSet rst = stmt.executeQuery();
+
+
 			String sql2 = "SELECT productId, quantity, price"+
 			" FROM orderproduct AS OP JOIN ordersummary AS OS ON OP.orderId = OS.orderId"+
 			" WHERE OS.orderId = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql2);
-			ResultSet rst = stmt.executeQuery(sql);
+
 			NumberFormat currFormat = NumberFormat.getCurrencyInstance(new Locale("en","US"));
 			//bonus, filter by cateogry
 			out.println("<table class='table'><thead class='thead-dark'><tr><th>Order ID</th><th>Order Date</th><th>Customer ID</th><th>Customer Name</th><th>Total Amount</th></tr></thead>");

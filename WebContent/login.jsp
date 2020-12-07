@@ -9,29 +9,36 @@
 
 <div class="container mt-5 text-center">
 
-<h3>Please Login to System</h3>
+	<%
+	// Print prior error login message if present
+	if (session.getAttribute("loginMessage") != null)
+		out.println("<div class='alert alert-danger' role=alert>"+session.getAttribute("loginMessage").toString()+"</div>");
+	%>
 
-<%
-// Print prior error login message if present
-if (session.getAttribute("loginMessage") != null)
-	out.println("<p>"+session.getAttribute("loginMessage").toString()+"</p>");
-%>
+<h3>Please Login to System:</h3>
+
 
 <br>
 <form name="MyForm" method=post action="validateLogin.jsp">
 <table style="display:inline">
 <tr>
-	<td><div align="right"><font face="Arial, Helvetica, sans-serif" size="2">Username:</font></div></td>
-	<td><input type="text" name="username"  size=10 maxlength=10></td>
+	<td><label for="inputUsername"  align="right">Username:</label></td>
+	<td><input class="form-control" id="inputUsername" type="text" name="username"  size=10 maxlength=10></td>
 </tr>
 <tr>
-	<td><div align="right"><font face="Arial, Helvetica, sans-serif" size="2">Password:</font></div></td>
-	<td><input type="password" name="password" size=10 maxlength="10"></td>
+	<td><label for="inputPassword" align="right">Password:</label></td>
+	<td><input class="form-control" id="inputUsername" type="password" name="password" size=10 maxlength="10"></td>
 </tr>
 </table>
 <br/>
-<input class="mt-4 submit" type="submit" name="Submit2" value="Log In">
+<input class="btn btn-primary mt-5" type="submit" name="Submit2" value="Log In">
 </form>
+
+<div class='mt-3'>
+	<a class="btn btn-secondary mt-1" href=createUser.jsp>Create User</a>
+</div>
+
+
 
 </div>
 

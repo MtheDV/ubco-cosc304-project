@@ -5,19 +5,17 @@
 </head>
 <body>
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand ml-2" href="index.jsp">GROCERY</a>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+    <a class="navbar-brand ml-2" href="index.jsp"><strong>Not Elon-chan's Electric Car Company</strong></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mL-auto">
             <li class="nav-item">
                 <a class="mr-4" href="listprod.jsp">Products</a>
             </li>
-        </ul>
-        <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="mr-4" href="showcart.jsp">Shopping Cart</a>
             </li>
