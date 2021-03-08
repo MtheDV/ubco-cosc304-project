@@ -1,5 +1,5 @@
 # ubco-cosc304-project <br> *Not Elon-chan's Electric Car Company (NECECC)*
-A project created as part of the cosc 304 class. Required to build an ecommerce website within a 4 person team following specific guidelines.
+A project created as part of a university class. Required to build an ecommerce website within a 4 person team following specific guidelines. The group decided on creating an electric vehicle ecommerce shop where users can browse a wide selection of vehicles, add them to their carts, place orders, leave reviews, and if customers leave the shop their carts will be saved. Customers can log in and admins can view pages not accessible to customers. Stock can be managed and profits monitored.
 Created using HTML, Bootstrap, MicrosoftSQL, and Java Server Pages. Developed in a Docker container.
 
 Our goal is to give customers the opportunity to easily filter, identify and purchase the EV that fits their every need. Everyone knows you can google Elon and then buy his car, which is multiple versions of the same thing. OEM manufactures are catching on to the EV hype and NECECC is here to help you decide which car you need.
